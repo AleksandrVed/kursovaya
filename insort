@@ -1,0 +1,105 @@
+# Python реализация алгоритма Introsort
+import math
+import sys
+from heapq import heappush, heappop
+from random import randint
+import time
+
+start = time.time()
+
+arr = []
+# Основная функция для сортировки # массив заданного размера # используя алгоритм heapsort
+def heapsort():
+    global arr
+    h = []
+    # построение кучи
+    for value in arr:
+        heappush(h, value)
+    arr = []
+    # извлечение отсортированных элементов один за другим
+    arr = arr + [heappop(h) for i in range(len(h))]
+# Основная функция сортировки данных с использованием # алгоритм сортировки вставкой
+def InsertionSort(begin, end):
+    left = begin
+    right = end
+    # Пройдите через 1 до len (обр.)
+    for i in range(left + 1, right + 1):
+        key = arr[i]
+        # Переместить элементы arr [0..i-1], которые # больше ключа, на одну позицию впереди # № их текущей позиции
+        j = i - 1
+        while j >= left and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j = j - 1
+        arr[j + 1] = key
+# Эта функция принимает последний элемент в качестве точки, мест # элемент поворота в правильном положении в отсортированном # массив, и все места меньше (меньше, чем сводная) # слева от точки поворота и всех больших элементов справа # Количество точек разворота
+def Partition(low, high):
+    global arr
+  # пивот
+    pivot = arr[high]
+  # индекс меньшего элемента
+    i = low - 1
+    for j in range(low, high):
+        # Если текущий элемент меньше или # равно оси вращения
+        if arr[j] <= pivot:
+            # индекс приращения меньшего элемента
+            i = i + 1
+            (arr[i], arr[j]) = (arr[j], arr[i])
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])
+    return i + 1
+# Функция найти медиану # из трех элементов в # в индексе a, b, d
+def MedianOfThree(a, b, d):
+    global arr
+    A = arr[a]
+    B = arr[b]
+    C = arr[d]
+    if A <= B and B <= C:
+        return b
+    if C <= B and B <= A:
+        return b
+    if B <= A and A <= C:
+        return a
+    if C <= A and A <= B:
+        return a
+    if B <= C and C <= A:
+        return d
+    if A <= C and C <= B:
+        return d
+# Основная функция, которая реализует Introsort # low -> Начальный индекс, # high -> Конечный индекс # deepLimit -> уровень рекурсии
+def IntrosortUtil(begin, end, depthLimit):
+    global arr
+    size = end - begin
+    if size < 16:
+        # если набор данных небольшой, вставьте сортировку вызовов
+        InsertionSort(begin, end)
+        return
+    if depthLimit == 0:
+        # если предел рекурсии достигнут, вызовите сортировку кучи
+        heapsort()
+        return
+    pivot = MedianOfThree(begin, begin + size // 2, end)
+    (arr[pivot], arr[end]) = (arr[end], arr[pivot])
+    # partitionPoint - разделительный индекс, # arr [partitionPoint] теперь в нужном месте
+    partitionPoint = Partition(begin, end)
+    # Отдельно сортировать элементы перед разделом и после раздела
+    IntrosortUtil(begin, partitionPoint - 1, depthLimit - 1)
+    IntrosortUtil(partitionPoint + 1, end, depthLimit - 1)
+# Сервисная функция для запуска модуля Introsort
+def Introsort(begin, end):
+    # инициализировать глубинаLimit как 2 * log (длина (данные))
+    depthLimit = 2 * math.log2(end - begin)
+    IntrosortUtil(begin, end, depthLimit)
+# Утилита для печати данных массива
+def printArr():
+    print ('Arr: ', arr)
+def main():
+    global arr
+    n = 10000
+    for i in range(n):
+        arr.append(randint(1, 99))
+    Introsort(0, n - 1)
+    printArr()
+if __name__ == '__main__':
+    main()
+
+end = time.time()
+print(end - start)
