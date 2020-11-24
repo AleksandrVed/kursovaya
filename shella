@@ -1,0 +1,27 @@
+from random import randint
+
+import time
+
+start = time.time()
+
+def shell(seq):
+    inc = len(seq) // 2
+    while inc:
+        for i, el in enumerate(seq):
+            while i >= inc and seq[i - inc] > el:
+                seq[i] = seq[i - inc]
+                i -= inc
+            seq[i] = el
+        inc = 1 if inc == 2 else int(inc * 5.0 / 11)
+  
+N = 10000
+alist = []
+
+for i in range(N):
+    alist.append(randint(1, 99))
+    
+shell(alist)
+print(alist)
+
+end = time.time()
+print(end - start)
