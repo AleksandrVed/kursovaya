@@ -18,7 +18,7 @@ if variant == 1:
             end = time.time() - start
             f = open('file.txt', 'a+')
             f.write(str(N))
-            f.write(' - ')
+            f.write('  ')
             f.write(str(end))
             f.write('\n')
             f.close()
@@ -43,7 +43,7 @@ elif variant == 2:
             end = time.time() - start
             f = open('file.txt', 'a+')
             f.write(str(N))
-            f.write(' - ')
+            f.write('  ')
             f.write(str(end))
             f.write('\n')
             f.close()
@@ -76,7 +76,7 @@ elif variant == 3:
             endTime = time.time() - startTime
             f = open('file.txt', 'a+')
             f.write(str(N))
-            f.write(' - ')
+            f.write('  ')
             f.write(str(end))
             f.write('\n')
             f.close()
@@ -156,7 +156,7 @@ elif variant == 4:
             endTime = time.time() - startTime
             f = open('file.txt', 'a+')
             f.write(str(N))
-            f.write(' - ')
+            f.write('  ')
             f.write(str(end))
             f.write('\n')
             f.close()
