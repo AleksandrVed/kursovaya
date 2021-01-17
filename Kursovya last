@@ -5,7 +5,7 @@ import math
 print("1 - Bubble", "2 - Shell", "3 - piramidalnaya", "4 - introsort", sep='\n')
 variant = int(input())
 if variant == 1:
-    for N in range (1000, 100001, 1000):
+    for N in range (100, 3001, 100):
         a = []
         for i in range(N):
             a.append(randint(1, 99))
@@ -16,6 +16,12 @@ if variant == 1:
                     if array[j] > array[j+1]:
                         array[j], array[j+1] = array[j+1], array[j]
             end = time.time() - start
+            f = open('file.txt', 'a+')
+            f.write(str(N))
+            f.write(' - ')
+            f.write(str(end))
+            f.write('\n')
+            f.close()
             return N, end
         print(bubble(a))
 elif variant == 2:
@@ -23,6 +29,7 @@ elif variant == 2:
         a = []
         for i in range(N):
             a.append(randint(1, 99))
+        print(a)
         def shell(seq):
             start = time.time()
             inc = len(seq) // 2
@@ -34,7 +41,13 @@ elif variant == 2:
                     seq[i] = el
                 inc = 1 if inc == 2 else int(inc * 5.0 / 11)
             end = time.time() - start
-            return N, end 
+            f = open('file.txt', 'a+')
+            f.write(str(N))
+            f.write(' - ')
+            f.write(str(end))
+            f.write('\n')
+            f.close()
+            return N, end
         print(shell(a))
 elif variant == 3:
     for N in range (1000, 100001, 1000):
@@ -61,6 +74,12 @@ elif variant == 3:
                 array[i], array[0] = array[0], array[i]
                 heapify(array, i, 0)
             endTime = time.time() - startTime
+            f = open('file.txt', 'a+')
+            f.write(str(N))
+            f.write(' - ')
+            f.write(str(end))
+            f.write('\n')
+            f.close()
             return N, endTime
         print(heap_sort(a))
 elif variant == 4:
@@ -135,5 +154,11 @@ elif variant == 4:
             end = len(alist)
             introSort(a, d, start, end)
             endTime = time.time() - startTime
+            f = open('file.txt', 'a+')
+            f.write(str(N))
+            f.write(' - ')
+            f.write(str(end))
+            f.write('\n')
+            f.close()
             return N, endTime
         print(startintro(a))
