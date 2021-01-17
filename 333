@@ -1,0 +1,64 @@
+from random import randint
+import time
+
+print("1 - Bubble", "2 - Shell", "3 - piramidalnaya", sep='\n')
+variant = int(input())
+if variant == 1:
+    for N in range (1000, 10001, 1000):
+        a = []
+        for i in range(N):
+            a.append(randint(1, 99))
+        def bubble(array):
+            start = time.time()
+            for i in range(N-1):
+                for j in range(N-i-1):
+                    if array[j] > array[j+1]:
+                        array[j], array[j+1] = array[j+1], array[j]
+            end = time.time() - start
+            return N, end
+        print(bubble(a))
+elif variant == 2:
+    for N in range (1000, 10001, 1000):
+        a = []
+        for i in range(N):
+            a.append(randint(1, 99))
+        def shell(seq):
+            start = time.time()
+            inc = len(seq) // 2
+            while inc:
+                for i, el in enumerate(seq):
+                    while i >= inc and seq[i - inc] > el:
+                        seq[i] = seq[i - inc]
+                        i -= inc
+                    seq[i] = el
+                inc = 1 if inc == 2 else int(inc * 5.0 / 11)
+            end = time.time() - start
+            return N, end 
+        print(shell(a))
+elif variant == 3:
+    for N in range (1000, 10001, 1000):
+        a = []
+        for i in range(N):
+            a.append(randint(1, 99))
+        def heapify(array, heap_size, root_index):
+            largest = root_index
+            left_child = (2 * root_index) + 1
+            right_child = (2 * root_index) + 2
+            if left_child < heap_size and array[left_child] > array[largest]:
+                largest = left_child
+            if right_child < heap_size and array[right_child] > array[largest]:
+                largest = right_child
+            if largest != root_index:
+                array[root_index], array[largest] = array[largest], array[root_index]
+                heapify(array, heap_size, largest)
+        def heap_sort(array):
+            startTime = time.time()
+            n = len(array)
+            for i in range(n, -1, -1):
+                heapify(array, n, i)
+            for i in range(n - 1, 0, -1):
+                array[i], array[0] = array[0], array[i]
+                heapify(array, i, 0)
+            endTime = time.time() - startTime
+            return N, endTime
+        print(heap_sort(a))
