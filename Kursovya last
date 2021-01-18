@@ -77,7 +77,7 @@ elif variant == 3:
             f = open('file.txt', 'a+')
             f.write(str(N))
             f.write('  ')
-            f.write(str(end))
+            f.write(str(endTime))
             f.write('\n')
             f.close()
             return N, endTime
